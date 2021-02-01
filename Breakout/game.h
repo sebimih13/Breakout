@@ -4,7 +4,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <tuple>
+
 #include "game_level.h"
+#include "ball_object.h"
 
 // Represents the current state of the game
 enum GameState
@@ -13,6 +16,17 @@ enum GameState
 	GAME_MENU,
 	GAME_WIN
 };
+
+enum Direction
+{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+};
+
+// collision data
+typedef std::tuple<bool, Direction, glm::vec2> Collision;
 
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100.0f, 20.0f);
@@ -47,6 +61,16 @@ public:
 	void ProcessInput(float deltaTime);
 	void Update(float deltaTime);
 	void Render();
+	void DoCollisions();
+
+	// Collision
+	Collision CheckCollision(BallObject& one, GameObject& two);
+	Direction VectorDirection(glm::vec2 target);
+	float ShakeTime;
+
+	// Reset
+	void ResetLevel();
+	void ResetPlayer();
 };
 
 #endif
