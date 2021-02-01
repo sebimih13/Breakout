@@ -64,6 +64,7 @@ public:
 	void DoCollisions();
 
 	// Collision
+	bool CheckCollision(GameObject& one, GameObject& two);
 	Collision CheckCollision(BallObject& one, GameObject& two);
 	Direction VectorDirection(glm::vec2 target);
 	float ShakeTime;
@@ -71,6 +72,14 @@ public:
 	// Reset
 	void ResetLevel();
 	void ResetPlayer();
+
+	// powerups
+	//std::vector<PowerUp> PowerUps;
+	//bool ShouldSpawn(unsigned int chance);
+	//void SpawnPowerUps(GameObject& block);
+	//void UpdatePowerUps(float deltaTime);
+	//void ActivatePowerUp(PowerUp& powerup);
+	//bool IsOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
 };
 
 #endif

@@ -1,2 +1,8 @@
-﻿  game.cpp
+﻿  power_up.cpp
+J:\OpenGL\Breakout\Breakout\power_up.cpp(8,22): warning C4018: '<': signed/unsigned mismatch
+J:\OpenGL\Breakout\Breakout\power_up.cpp(99,21): warning C4244: '=': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   Breakout.vcxproj -> J:\OpenGL\Breakout\x64\Debug\Breakout.exe

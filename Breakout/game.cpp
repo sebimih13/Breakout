@@ -3,6 +3,7 @@
 #include "sprite_renderer.h"
 #include "particle_generator.h"
 #include "post_processor.h"
+#include "power_up.h"
 
 #include <string>
 
@@ -12,6 +13,7 @@ GameObject* Player;
 BallObject* Ball;
 ParticleGenerator* Particles;
 PostProcessor* Effects;
+PowerUpsManager* PowerUpManager;
 
 Game::Game(unsigned int width, unsigned int height)
 	: State(GameState::GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -26,6 +28,7 @@ Game::~Game()
 	delete Ball;
 	delete Particles;
 	delete Effects;
+	delete PowerUpManager;
 }
 
 void Game::Init()
@@ -50,6 +53,13 @@ void Game::Init()
 	ResourceManager::LoadTexture("assets/block_solid.png", false, "block_solid");
 	ResourceManager::LoadTexture("assets/paddle.png", true, "paddle");
 	ResourceManager::LoadTexture("assets/particle.png", true, "particle");
+
+	ResourceManager::LoadTexture("assets/powerup_speed.png", true, "powerup_speed");
+	ResourceManager::LoadTexture("assets/powerup_chaos.png", true, "powerup_chaos");
+	ResourceManager::LoadTexture("assets/powerup_confuse.png", true, "powerup_confuse");
+	ResourceManager::LoadTexture("assets/powerup_increase.png", true, "powerup_increase");
+	ResourceManager::LoadTexture("assets/powerup_passthrough.png", true, "powerup_passthrough");
+	ResourceManager::LoadTexture("assets/powerup_sticky.png", true, "powerup_sticky");
 
 	// load levels
 	for (int i = 1; i <= 5; i++)
@@ -76,6 +86,9 @@ void Game::Init()
 
 	// congfiure effects system
 	Effects = new PostProcessor(ResourceManager::GetShader("postprocessing"), this->Width, this->Height);
+
+	// configure powerups manager
+	PowerUpManager = new PowerUpsManager();
 }
 
 void Game::ProcessInput(float deltaTime)
@@ -113,6 +126,10 @@ void Game::Update(float deltaTime)
 	// update particles
 	Particles->Update(deltaTime, *Ball, 3, glm::vec2(Ball->Radius / 2.0f));
 
+	// update PowerUps
+	PowerUpManager->UpdatePowerUps(deltaTime, Player, Ball, Effects);
+
+	// reduce shake time
 	if (ShakeTime > 0.0f)
 	{
 		ShakeTime -= deltaTime;
@@ -125,6 +142,7 @@ void Game::Update(float deltaTime)
 	{
 		ResetLevel();
 		ResetPlayer();
+		PowerUpManager->Reset();
 	}
 }
 
@@ -137,12 +155,19 @@ void Game::Render()
 
 			// draw background
 			Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(Width, Height), 0.0f);
+
 			// draw level
 			Levels[Level].Draw(*Renderer);
+
 			// draw player
 			Player->Draw(*Renderer);
+
+			// draw PowerUps
+			PowerUpManager->DrawPowerUps(Renderer);
+
 			// draw particles
 			Particles->Draw();
+
 			// draw ball
 			Ball->Draw(*Renderer);
 
@@ -162,7 +187,10 @@ void Game::DoCollisions()
 			{
 				// destroy block if not solid
 				if (!box.IsSolid)
+				{
 					box.Destroyed = true;
+					PowerUpManager->SpawnPowerUps(box);
+				}
 				else
 				{
 					ShakeTime = 0.05f;
@@ -173,31 +201,37 @@ void Game::DoCollisions()
 				Direction dir = std::get<1>(collision);
 				glm::vec2 diff_vector = std::get<2>(collision);
 
-				if (dir == LEFT || dir == RIGHT)	// horizontal collision
+				if (!(Ball->PassThrough && !box.IsSolid))
 				{
-					Ball->Velocity.x = -Ball->Velocity.x;
+					if (dir == LEFT || dir == RIGHT)	// horizontal collision
+					{
+						Ball->Velocity.x = -Ball->Velocity.x;
 
-					// relocate
-					float penetration = Ball->Radius - std::abs(diff_vector.x);
-					if (dir == LEFT)
-						Ball->Position.x += penetration;
-					else
-						Ball->Position.y -= penetration;
-				}
-				else	// vertical collision
-				{
-					Ball->Velocity.y = -Ball->Velocity.y;
+						// relocate
+						float penetration = Ball->Radius - std::abs(diff_vector.x);
+						if (dir == LEFT)
+							Ball->Position.x += penetration;
+						else
+							Ball->Position.y -= penetration;
+					}
+					else	// vertical collision
+					{
+						Ball->Velocity.y = -Ball->Velocity.y;
 
-					// relocate
-					float penetration = Ball->Radius - std::abs(diff_vector.y);
-					if (dir == UP)
-						Ball->Position.y -= penetration;
-					else
-						Ball->Position.y += penetration;
+						// relocate
+						float penetration = Ball->Radius - std::abs(diff_vector.y);
+						if (dir == UP)
+							Ball->Position.y -= penetration;
+						else
+							Ball->Position.y += penetration;
+					}
 				}
 			}
 		}
 	}
+
+	// check collision for player pad and powerups
+	PowerUpManager->CheckCollision(Player, Ball, Effects, this->Height, this->Width);
 
 	// check collisions for player pad
 	Collision result = CheckCollision(*Ball, *Player);
@@ -217,7 +251,21 @@ void Game::DoCollisions()
 
 		// fix sticky paddle
 		Ball->Velocity.y = -1.0f * abs(Ball->Velocity.y);
+
+		// if sticky powerup is active => stick ball to padle
+		Ball->Stuck = Ball->Sticky;
 	}
+}
+
+bool Game::CheckCollision(GameObject& one, GameObject& two)
+{
+	bool collisionX = one.Position.x + one.Size.x >= two.Position.x &&
+					  two.Position.x + two.Size.x >= one.Position.x;
+
+	bool collisionY = one.Position.y + one.Size.y >= two.Position.y &&
+					  two.Position.y + two.Size.y >= one.Position.y;
+
+	return collisionX && collisionY;
 }
 
 Collision Game::CheckCollision(BallObject& one, GameObject& two)
