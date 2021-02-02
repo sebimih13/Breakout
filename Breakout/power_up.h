@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <irrKlang/irrKlang.h>
 
 #include <string>
 #include <vector>
@@ -42,7 +43,7 @@ public:
 	void SpawnPowerUps(GameObject& block);
 	void UpdatePowerUps(float deltaTime, GameObject* Player, BallObject* Ball, PostProcessor* Effects);
 	void DrawPowerUps(SpriteRenderer* Renderer);
-	void CheckCollision(GameObject* Player, BallObject* Ball, PostProcessor* Effects, unsigned int Height, unsigned int Width);
+	void CheckCollision(GameObject* Player, BallObject* Ball, PostProcessor* Effects, irrklang::ISoundEngine* SoundEngine, unsigned int Height, unsigned int Width);
 	void Reset();
 
 private:
@@ -50,7 +51,7 @@ private:
 	std::vector<PowerUp> PowerUps;
 
 	// utility
-	bool ShouldSpawn(unsigned int chance);
+	bool ShouldSpawn(int chance);
 	void ActivatePowerUp(PowerUp& powerup, GameObject* Player, BallObject* Ball, PostProcessor* Effects, unsigned int width);
 	bool IsOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
 

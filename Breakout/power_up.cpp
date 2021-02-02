@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-bool PowerUpsManager::ShouldSpawn(unsigned int chance)
+bool PowerUpsManager::ShouldSpawn(int chance)
 {
 	return rand() % 100 < chance;
 }
@@ -94,9 +94,9 @@ void PowerUpsManager::ActivatePowerUp(PowerUp& powerup, GameObject* Player, Ball
 	else if (powerup.Type == "pad-size-increase")
 	{
 		if (Player->Size.x < width)
-			Player->Size.x += 100;
+			Player->Size.x += 20;
 		if (Player->Size.x >= width)
-			Player->Size.x = width;
+			Player->Size.x = (float)width;
 	}
 	else if (powerup.Type == "confuse")
 	{
@@ -125,7 +125,7 @@ void PowerUpsManager::DrawPowerUps(SpriteRenderer* Renderer)
 			powerup.Draw(*Renderer);
 }
 
-void PowerUpsManager::CheckCollision(GameObject* Player, BallObject* Ball, PostProcessor* Effects, unsigned int Height, unsigned int Width)
+void PowerUpsManager::CheckCollision(GameObject* Player, BallObject* Ball, PostProcessor* Effects, irrklang::ISoundEngine* SoundEngine, unsigned int Height, unsigned int Width)
 {
 	for (PowerUp& powerup : this->PowerUps)
 	{
@@ -140,6 +140,7 @@ void PowerUpsManager::CheckCollision(GameObject* Player, BallObject* Ball, PostP
 				ActivatePowerUp(powerup, Player, Ball, Effects, Width);
 				powerup.Destroyed = true;
 				powerup.Activated = true;
+				SoundEngine->play2D("audio/powerup.wav", false);
 			}
 		}
 	}

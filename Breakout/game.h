@@ -50,9 +50,11 @@ public:
 	// game state
 	GameState State;
 	bool Keys[1024];
+	bool KeysProcessed[1024];
 	unsigned int Width, Height;
 	std::vector<GameLevel> Levels;
 	unsigned int Level;
+	unsigned int Lives;
 
 	// initialize game state (load all shaders / textures / levels)
 	void Init();
@@ -72,14 +74,6 @@ public:
 	// Reset
 	void ResetLevel();
 	void ResetPlayer();
-
-	// powerups
-	//std::vector<PowerUp> PowerUps;
-	//bool ShouldSpawn(unsigned int chance);
-	//void SpawnPowerUps(GameObject& block);
-	//void UpdatePowerUps(float deltaTime);
-	//void ActivatePowerUp(PowerUp& powerup);
-	//bool IsOtherPowerUpActive(std::vector<PowerUp>& powerUps, std::string type);
 };
 
 #endif
