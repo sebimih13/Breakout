@@ -109,5 +109,7 @@
     <None Include="shaders\particle.frag" />
     <None Include="shaders\post_processing.frag" />
     <None Include="shaders\post_processing.vert" />
+    <None Include="shaders\text_2D.vert" />
+    <None Include="shaders\text_2D.frag" />
   </ItemGroup>
 </Project>

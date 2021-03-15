@@ -24,7 +24,7 @@ public:
 	// constructor
 	TextRenderer(unsigned int width, unsigned int height);
 
-	// holds a llist of precompiled Characters
+	// holds a list of precompiled Characters
 	std::map<char, Character> Characters;
 
 	Shader TextShader;

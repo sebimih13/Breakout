@@ -1,2 +1,5 @@
 ﻿  game.cpp
+  text_renderer.cpp
+J:\OpenGL\Breakout\Breakout\text_renderer.cpp(77,24): warning C4838: conversion from 'FT_Pos' to 'unsigned int' requires a narrowing conversion
+  Generating Code...
   Breakout.vcxproj -> J:\OpenGL\Breakout\x64\Debug\Breakout.exe
