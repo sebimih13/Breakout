@@ -17,12 +17,12 @@ Breakout game
 # Controls
 
 Input  | Description
-------------------------------------------------------------------------------------- | -------------
-<img src="">    | Enter
-<img src="">    | A
-<img src="">    | D
-<img src="">    | W
-<img src="">    | S
+------------------------------------------------------------------------------------------- | -------------
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/Enter_Key_Dark.png">     | Enter to start the game
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/A_Key_Dark.png">         | A to move left
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/D_Key_Dark.png">         | D to move right
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/W_Key_Dark.png">         | W to change the map
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/S_Key_Dark.png">         | S to change the map
 
 
 <br />
