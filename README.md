@@ -1,6 +1,10 @@
 # Breakout
 Breakout game
 
+<p align="center">
+  <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/game.gif">
+</p>
+
 <br /> 
 
 # Technologies used
@@ -23,7 +27,6 @@ Input  | Description
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/D_Key_Dark.png">         | D to move right
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/W_Key_Dark.png">         | W to change the map
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/S_Key_Dark.png">         | S to change the map
-
 
 <br />
 
