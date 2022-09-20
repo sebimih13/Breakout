@@ -27,6 +27,7 @@ Input  | Description
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/D_Key_Dark.png">         | D to move right
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/W_Key_Dark.png">         | W to change the map
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/S_Key_Dark.png">         | S to change the map
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/Space_Key_Dark.png">         | Space
 
 <br />
 
