@@ -1,5 +1,5 @@
 # Breakout
-Breakout game
+Breakout game inspired by the excellent book [Learn OpenGL: Learn modern OpenGL graphics programming in a step-by-step fashion](https://www.amazon.it/dp/9090332561?tag=joeydevrie032-21&geniuslink=true)
 
 <p align="center">
   <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/game.gif">
@@ -22,18 +22,18 @@ Breakout game
 
 Input  | Description
 ------------------------------------------------------------------------------------------- | -------------
-<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/Enter_Key_Dark.png">     | Enter to start the game
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/Enter_Key_Dark.png">     | Enter to start the selected level
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/A_Key_Dark.png">         | A to move left
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/D_Key_Dark.png">         | D to move right
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/W_Key_Dark.png">         | W to change the map
 <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/S_Key_Dark.png">         | S to change the map
-<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/Space_Key_Dark.png">         | Space
+<img src="https://github.com/sebimih13/Breakout/blob/main/Resource/Space_Key_Dark.png">     | Space to start the game
 
 <br />
 
 # Power-ups
 
-Power-up Icon  | Description | Blabla
+Power-up Icon  | Description | Example
 ----------------------------------------------------------------------------------------------------- | -------------------- | ---------------------
 <img src="https://github.com/sebimih13/Breakout/blob/main/Breakout/assets/powerup_speed.png">                                                                             | Speed                | <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/speed.gif">
 <img src="https://github.com/sebimih13/Breakout/blob/main/Breakout/assets/powerup_increase.png">                                                                          | Pad size increase    | <img src="https://github.com/sebimih13/Breakout/blob/main/Resource/pad-size-increase.gif">
